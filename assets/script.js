@@ -19,37 +19,48 @@ const slides = [
 
 let leftArrow = document.getElementById("arrow-left");
 let rightArrow = document.getElementById("arrow-right");
-let currentIndex = 1;
+let currentIndex = 0;
 let sliderText = document.getElementById("slider-text");
-let sliderImage = document.getElementsByClassName("banner-img")[0];
+let sliderImage = document.querySelector(".banner-img");
+let dotsContainer = document.querySelector(".dots");
 
-function changeText(index){
-	let message = slides[index].tagLine;
-	sliderText.innerHTML = message;
+function createDots(){
+	for (let i = 0; i < slides.length; i++) {
+		let radioButton = document.createElement("input");
+		radioButton.type = "radio";
+		radioButton.name = "options";
+		radioButton.id = i;
+		radioButton.setAttribute("aria-label", slides[i].image);
+		radioButton.classList.add("dot");
+		radioButton.addEventListener("click", function() {
+			changeSlide(radioButton.id);
+		});
+		dotsContainer.appendChild(radioButton);
+	}
 }
 
-function changeImage(index){
+createDots();
+
+function changeSlide(index){
+	let message = slides[index].tagLine;
 	let imageSrc = slides[index].image;
 	let imagePath = "./assets/images/slideshow/" + imageSrc;
+	let buttonToCheck = document.getElementById(index);
+	buttonToCheck.checked = true;
+	sliderText.innerHTML = message;
 	sliderImage.src = imagePath;
 }
 
 leftArrow.addEventListener("click", function() {
 	currentIndex--;
-	if(currentIndex<0){
-		currentIndex = slides.length-1;
-	}
-	changeImage(currentIndex);
-    changeText(currentIndex);
+	currentIndex = (currentIndex + slides.length) % slides.length;
+	changeSlide(currentIndex);
 });
 
 rightArrow.addEventListener("click", function() {
 	currentIndex++;
-	if(currentIndex>slides.length-1){
-		currentIndex = 0;
-	}
-	changeImage(currentIndex);
-    changeText(currentIndex);
+	currentIndex = (currentIndex + slides.length) % slides.length;
+	changeSlide(currentIndex);
 });
 
 
