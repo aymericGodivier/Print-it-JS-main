@@ -39,6 +39,8 @@ function createDots(){
 		});
 		dotsContainer.appendChild(radioButton);
 	}
+	let firstChecked = document.getElementById(0);
+	firstChecked.classList.add("dot_selected");
 }
 
 createDots();
