@@ -55,6 +55,7 @@ function changeSlide(index){
 	sliderText.innerHTML = message;
 	sliderImage.src = imagePath;
 	previousIndex = index;
+	currentIndex = index;
 }
 
 function removeSelected(index){
@@ -63,15 +64,17 @@ function removeSelected(index){
 }
 
 leftArrow.addEventListener("click", function() {
-    previousIndex = currentIndex;
     currentIndex = (currentIndex - 1 + slides.length) % slides.length;
     removeSelected(previousIndex);
     changeSlide(currentIndex);
 });
 
 rightArrow.addEventListener("click", function() {
-    previousIndex = currentIndex;
-    currentIndex = (currentIndex + 1) % slides.length;
+	currentIndex++
+    //currentIndex = (currentIndex + 1) % slides.length;
+	if(currentIndex>slides.length-1){
+		currentIndex = 0;
+	}
     removeSelected(previousIndex);
     changeSlide(currentIndex);
 });
