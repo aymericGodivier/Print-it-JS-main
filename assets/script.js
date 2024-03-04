@@ -35,7 +35,7 @@ function createDots(){
 		radioButton.classList.add("dot");
 		radioButton.addEventListener("click", function() {
 			removeSelected(previousIndex);
-			changeSlide(radioButton.id);
+			changeSlide(Number(radioButton.id));
 		});
 		dotsContainer.appendChild(radioButton);
 	}
@@ -70,11 +70,7 @@ leftArrow.addEventListener("click", function() {
 });
 
 rightArrow.addEventListener("click", function() {
-	currentIndex++
-    //currentIndex = (currentIndex + 1) % slides.length;
-	if(currentIndex>slides.length-1){
-		currentIndex = 0;
-	}
+    currentIndex = (currentIndex + 1) % slides.length;
     removeSelected(previousIndex);
     changeSlide(currentIndex);
 });
